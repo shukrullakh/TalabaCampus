@@ -5,6 +5,7 @@ from rest_framework import status, viewsets, permissions
 from .models import UserSession, Question, Answer, Reply, Notification, Like, LoginSession
 from .serializers import QuestionSerializer, AnswerSerializer, ReplySerializer, NotificationSerializer, RegisterSerializer, LoginSerializer
 from django.contrib.auth import get_user_model
+import os
 
 User = get_user_model()
 
@@ -368,7 +369,7 @@ class AIProxyView(APIView):
             res = req_lib.post(
                 "https://api.groq.com/openai/v1/chat/completions",
                 headers={
-                    "Authorization": "Bearer REMOVED_API_KEY",
+                    "Authorization": f"Bearer {os.getenv('GROQ_API_KEY')}",
                     "Content-Type": "application/json"
                 },
                 json={
